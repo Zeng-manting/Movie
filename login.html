@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <script src="dist/js/bootstrap.bundle.js"></script>
+    <title>登录 - 神影视频网</title>
+    <style>
+        /* 全局样式 */
+        :root {
+            /* 主色调 - 蓝绿色渐变 */
+            --primary-color: #20c997;
+            --primary-dark: #17a2b8;
+            --primary-light: #48d1cc;
+            
+            /* 辅助色 */
+            --secondary-color: #6c757d;
+            --secondary-dark: #495057;
+            --secondary-light: #868e96;
+            
+            /* 功能色 */
+            --success-color: #28a745;
+            --success-dark: #218838;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            
+            /* 浅色主题背景色 */
+            --bg-color: #f8f9fa;
+            --bg-dark: #e9ecef;
+            --bg-card: #ffffff;
+            --bg-light: #f1f3f5;
+            
+            /* 文字色 */
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --text-light: #adb5bd;
+            --text-dark: #000000;
+            
+            /* 阴影 */
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --header-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            
+            /* 圆角 */
+            --border-radius-sm: 0.375rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 0.75rem;
+            
+            /* 过渡效果 */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s ease;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* 头部样式 */
+        .header {
+            background-color: var(--bg-card);
+            box-shadow: var(--card-shadow);
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        /* 新增样式：确保header宽度为100% */
+        .full-width-header {
+            width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        
+        /* 登录表单样式 */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+            padding-bottom: 2rem;
+        }
+        
+        .login-card {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--card-shadow);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .login-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        /* 表单控件样式 */
+        .form-control {
+            background-color: var(--bg-light) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--secondary-color) !important;
+            border-radius: var(--border-radius-sm) !important;
+        }
+        
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(32, 201, 151, 0.25) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        /* 按钮样式 */
+        .btn-success {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            border: none;
+            color: white;
+            transition: var(--transition);
+            border-radius: var(--border-radius-sm);
+        }
+        
+        .btn-success:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(32, 201, 151, 0.4);
+        }
+        
+        /* 注册链接样式 */
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 页脚样式 */
+        .footer {
+            background-color: var(--bg-card);
+            padding: 2rem 0;
+            border-top: 1px solid var(--bg-light);
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-text {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .logo-text h1 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 1.5rem;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 (移到.container外面并添加full-width-header类) -->
+    <header class="header full-width-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Logo部分 -->
+                <div class="col-md-4">
+                    <div class="logo-section">
+                        <i class="fa fa-play-circle-o fa-3x logo"></i>
+                        <div class="logo-text">
+                            <h1>神影视频</h1>
+                            <p>ShenYing Video</p>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </header>
+    
+    <!-- 其余内容保持在.container内 -->
+    <div class="container">
+        <!-- 登录表单 -->
+        <section class="login-container">
+            <div class="login-card">
+                <h2 class="login-title">用户登录</h2>
+                <form onsubmit="return handleLoginSubmit()">
+                    <div class="mb-3">
+                        <label for="loginUsername" class="form-label">用户名/邮箱</label>
+                        <input type="text" class="form-control" id="loginUsername" placeholder="请输入用户名或邮箱地址" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">密码</label>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="请输入密码" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">记住我</label>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">登录</button>
+                    <div class="register-link">
+                        <p>还没有账号？<a href="register.html">立即注册</a></p>
+                    </div>
+                </form>
+                <script>
+                    function handleLoginSubmit() {
+                        alert("登录成功！");
+                        window.location.href = "index.html";
+                        return false; // 阻止表单默认提交
+                    }
+                </script>
+            </div>
+        </section>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="#">关于我们</a>
+                <a href="#">联系方式</a>
+                <a href="#">用户协议</a>
+                <a href="#">隐私政策</a>
+                <a href="#">版权声明</a>
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2025 神影视频网 版权所有</p>
+                <p>ZS25032301002 曾蔓婷</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

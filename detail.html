@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <script src="dist/js/bootstrap.bundle.js"></script>
+    <title>电影详情 - 神影视频</title>
+    <style>
+        /* 全局样式 - 与现有页面保持一致 */
+        :root {
+            /* 主色调 - 蓝绿色渐变 */
+            --primary-color: #20c997;
+            --primary-dark: #17a2b8;
+            --primary-light: #48d1cc;
+            
+            /* 辅助色 */
+            --secondary-color: #6c757d;
+            --secondary-dark: #495057;
+            --secondary-light: #868e96;
+            
+            /* 功能色 */
+            --success-color: #28a745;
+            --success-dark: #218838;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            
+            /* 浅色主题背景色 */
+            --bg-color: #f8f9fa;
+            --bg-dark: #e9ecef;
+            --bg-card: #ffffff;
+            --bg-light: #f1f3f5;
+            
+            /* 文字色 */
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --text-light: #adb5bd;
+            --text-dark: #000000;
+            
+            /* 阴影 */
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --header-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            
+            /* 圆角 */
+            --border-radius-sm: 0.375rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 0.75rem;
+            
+            /* 过渡效果 */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s ease;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* 头部样式 - 与现有页面保持一致 */
+        .header {
+            background-color: var(--bg-card);
+            box-shadow: var(--card-shadow);
+            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .search-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .search-box {
+            max-width: 300px;
+            width: 100%;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* 主要导航 - 与现有页面保持一致 */
+        .main-nav {
+            background-color: var(--bg-card);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 0;
+        }
+        
+        .nav-pills .nav-link {
+            color: var(--text-primary);
+            font-weight: 500;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+            margin: 0 0.25rem;
+        }
+        
+        .nav-pills .nav-link:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+        }
+        
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            color: white;
+        }
+        
+        /* 电影详情页特定样式 */
+        .movie-detail-section {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .movie-poster {
+            max-width: 100%;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1rem;
+        }
+        
+        .movie-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .movie-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .rating-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warning-color);
+        }
+        
+        .movie-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .movie-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .movie-genres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .genre-tag {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .movie-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            border: none;
+            color: white;
+            transition: var(--transition);
+            border-radius: var(--border-radius-sm);
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(32, 201, 151, 0.4);
+            color: white;
+        }
+        
+        .btn-outline-primary {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: var(--transition);
+            border-radius: var(--border-radius-sm);
+        }
+        
+        .btn-outline-primary:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 12px rgba(32, 201, 151, 0.4);
+        }
+        
+        .section-subtitle {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .section-subtitle::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background-color: var(--danger-color);
+            border-radius: 2px;
+        }
+        
+        /* 剧情简介样式 */
+        .movie-synopsis {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .synopsis-text {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            text-align: justify;
+        }
+        
+        /* 演员阵容样式 */
+        .cast-section {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .cast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .cast-member {
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .cast-member:hover {
+            transform: translateY(-5px);
+        }
+        
+        .cast-avatar {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 0.5rem;
+        }
+        
+        .cast-name {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: var(--text-primary);
+        }
+        
+        .cast-role {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        /* 相关推荐样式 */
+        .recommendations-section {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .recommendation-card {
+            border: 1px solid var(--bg-light);
+            background-color: var(--bg-card);
+            box-shadow: var(--card-shadow);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+        }
+        
+        .recommendation-card:hover {
+            box-shadow: var(--card-hover-shadow);
+            transform: translateY(-5px);
+        }
+        
+        .recommendation-card img {
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .recommendation-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .recommendation-info {
+            padding: 1rem;
+        }
+        
+        .recommendation-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        
+        .recommendation-card:hover .recommendation-title {
+            color: var(--primary-color);
+        }
+        
+        .recommendation-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+            color: var(--warning-color);
+        }
+        
+        /* 页脚样式 - 与现有页面保持一致 */
+        .footer {
+            background-color: var(--bg-card);
+            padding: 2rem 0;
+            border-top: 1px solid var(--bg-light);
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-text {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* 表单控件样式 - 与现有页面保持一致 */
+        .form-control {
+            background-color: var(--bg-light) !important;
+            color: var(--text-primary) !important;
+            border-color: var(--secondary-color) !important;
+            border-radius: var(--border-radius-sm) !important;
+        }
+        
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(32, 201, 151, 0.25) !important;
+            border-color: var(--primary-color) !important;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .movie-detail-section {
+                padding: 1.5rem;
+            }
+            
+            .movie-title {
+                font-size: 1.5rem;
+            }
+            
+            .movie-poster {
+                max-width: 200px;
+                margin: 0 auto 1rem;
+                display: block;
+            }
+            
+            .movie-synopsis,
+            .cast-section,
+            .recommendations-section {
+                padding: 1.5rem;
+            }
+            
+            .cast-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 1rem;
+            }
+            
+            .cast-avatar {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .movie-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .movie-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        /* 新增样式：确保header宽度为100% */
+        .full-width-header {
+            width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 (与现有页面相同) -->
+    <header class="header full-width-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Logo部分 -->
+                <div class="col-md-4">
+                    <div class="logo-section">
+                        <i class="fa fa-play-circle-o fa-3x" style="background: linear-gradient(135deg, var(--primary-color), var(--success-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+                        <div class="logo-text">
+                            <h1>神影视频</h1>
+                            <p>ShenYing Video</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 搜索和用户操作 -->
+                <div class="col-md-8">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="search-box">
+                                <div class="input-group">
+                                    <input type="search" class="form-control" placeholder="搜索电影、电视剧、演员...">
+                                    <button class="btn btn-success" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="nav-links justify-content-end">
+                                <a href="login.html" class="btn btn-outline-success">
+                                    <i class="fa fa-user"></i> 登录
+                                </a>
+                                <a href="register.html" class="btn btn-success">
+                                    <i class="fa fa-user-plus"></i> 注册
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 其余内容保持在.container内 -->
+    <div class="container">
+        <!-- 主要导航 (与现有页面相同) -->
+        <nav class="main-nav">
+            <div class="d-flex justify-content-center">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">电影</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">电视剧</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">动漫</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">综艺</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">纪录片</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">会员专区</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- 电影详情内容 -->
+        <section class="movie-detail-section">
+            <div class="row">
+                <!-- 电影海报 -->
+                <div class="col-md-4">
+                    <img src="image/01.png" alt="电影海报" class="movie-poster">
+                </div>
+                
+                <!-- 电影信息 -->
+                <div class="col-md-8">
+                    <h1 class="movie-title">复仇者联盟4：终局之战</h1>
+                    
+                    <!-- 评分 -->
+                    <div class="movie-rating">
+                        <div class="rating-value">9.2</div>
+                        <div class="rating-stars">
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star-half-o" style="color: var(--warning-color);"></i>
+                        </div>
+                        <div class="rating-count">123456人评分</div>
+                    </div>
+                    
+                    <!-- 类型标签 -->
+                    <div class="movie-genres">
+                        <span class="genre-tag">动作</span>
+                        <span class="genre-tag">科幻</span>
+                        <span class="genre-tag">冒险</span>
+                        <span class="genre-tag">超级英雄</span>
+                    </div>
+                    
+                    <!-- 元数据 -->
+                    <div class="movie-meta">
+                        <div class="movie-meta-item">
+                            <i class="fa fa-calendar"></i>
+                            <span>2019-04-24</span>
+                        </div>
+                        <div class="movie-meta-item">
+                            <i class="fa fa-clock-o"></i>
+                            <span>181分钟</span>
+                        </div>
+                        <div class="movie-meta-item">
+                            <i class="fa fa-user"></i>
+                            <span>安东尼·罗素, 乔·罗素</span>
+                        </div>
+                        <div class="movie-meta-item">
+                            <i class="fa fa-users"></i>
+                            <span>小罗伯特·唐尼, 克里斯·埃文斯, 斯嘉丽·约翰逊</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 操作按钮 -->
+                    <div class="movie-buttons">
+                        <button class="btn btn-primary btn-lg">
+                            <i class="fa fa-play"></i> 立即播放
+                        </button>
+                        <button class="btn btn-outline-primary btn-lg">
+                            <i class="fa fa-plus"></i> 加入收藏
+                        </button>
+                        <button class="btn btn-outline-primary btn-lg">
+                            <i class="fa fa-share-alt"></i> 分享
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 剧情简介 -->
+        <section class="movie-synopsis">
+            <h2 class="section-subtitle">剧情简介</h2>
+            <div class="synopsis-text">
+                <p>灭霸响指过后，宇宙间半数生命灰飞烟灭。幸存的复仇者们在惊奇队长的帮助下找到灭霸所在的星球，却发现灭霸已经将宝石摧毁，无计可施的复仇者们不得不接受这个残酷的现实。</p>
+                <p>五年后，蚁人斯科特意外从量子领域中归来，他提出了一个大胆的想法：通过量子领域进行时间旅行，收集过去的无限宝石，从而逆转灭霸的行为。复仇者们决定孤注一掷，为了人类和宇宙的未来，再次集结，展开了一场前所未有的时空冒险。</p>
+                <p>在这场终极之战中，复仇者们将面对过去的自己、强大的敌人以及不可预测的命运，他们必须团结一致，才能拯救宇宙中消失的生命，完成这场终局之战。</p>
+            </div>
+        </section>
+        
+        <!-- 演员阵容 -->
+        <section class="cast-section">
+            <h2 class="section-subtitle">演员阵容</h2>
+            <div class="cast-grid">
+                <div class="cast-member">
+                    <img src="image/02.png" alt="小罗伯特·唐尼" class="cast-avatar">
+                    <div class="cast-name">小罗伯特·唐尼</div>
+                    <div class="cast-role">饰演 钢铁侠</div>
+                </div>
+                <div class="cast-member">
+                    <img src="image/03.png" alt="克里斯·埃文斯" class="cast-avatar">
+                    <div class="cast-name">克里斯·埃文斯</div>
+                    <div class="cast-role">饰演 美国队长</div>
+                </div>
+                <div class="cast-member">
+                    <img src="image/04.png" alt="斯嘉丽·约翰逊" class="cast-avatar">
+                    <div class="cast-name">斯嘉丽·约翰逊</div>
+                    <div class="cast-role">饰演 黑寡妇</div>
+                </div>
+                <div class="cast-member">
+                    <img src="image/05.png" alt="克里斯·海姆斯沃斯" class="cast-avatar">
+                    <div class="cast-name">克里斯·海姆斯沃斯</div>
+                    <div class="cast-role">饰演 雷神</div>
+                </div>
+                <div class="cast-member">
+                    <img src="image/06.png" alt="马克·鲁法洛" class="cast-avatar">
+                    <div class="cast-name">马克·鲁法洛</div>
+                    <div class="cast-role">饰演 绿巨人</div>
+                </div>
+                <div class="cast-member">
+                    <img src="image/07.png" alt="杰瑞米·雷纳" class="cast-avatar">
+                    <div class="cast-name">杰瑞米·雷纳</div>
+                    <div class="cast-role">饰演 鹰眼</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 相关推荐 -->
+        <section class="recommendations-section">
+            <h2 class="section-subtitle">相关推荐</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="recommendation-card">
+                        <img src="image/08.png" alt="复仇者联盟3：无限战争" class="img-fluid">
+                        <div class="recommendation-info">
+                            <h3 class="recommendation-title">复仇者联盟3：无限战争</h3>
+                            <div class="recommendation-rating">
+                                <i class="fa fa-star"></i>
+                                <span>8.8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="recommendation-card">
+                        <img src="image/09.png" alt="复仇者联盟2：奥创纪元" class="img-fluid">
+                        <div class="recommendation-info">
+                            <h3 class="recommendation-title">复仇者联盟2：奥创纪元</h3>
+                            <div class="recommendation-rating">
+                                <i class="fa fa-star"></i>
+                                <span>8.3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="recommendation-card">
+                        <img src="image/10.jpg" alt="钢铁侠3" class="img-fluid">
+                        <div class="recommendation-info">
+                            <h3 class="recommendation-title">钢铁侠3</h3>
+                            <div class="recommendation-rating">
+                                <i class="fa fa-star"></i>
+                                <span>7.9</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="recommendation-card">
+                        <img src="image/11.jpg" alt="美国队长3：内战" class="img-fluid">
+                        <div class="recommendation-info">
+                            <h3 class="recommendation-title">美国队长3：内战</h3>
+                            <div class="recommendation-rating">
+                                <i class="fa fa-star"></i>
+                                <span>8.5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 页脚 (与现有页面相同) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">关于我们</a>
+                <a href="#">联系方式</a>
+                <a href="#">用户协议</a>
+                <a href="#">隐私政策</a>
+                <a href="#">版权声明</a>
+                <a href="admin.html">后台管理</a> 
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2025 神影视频网 版权所有</p>
+                <p>ZS25032301002 曾蔓婷</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

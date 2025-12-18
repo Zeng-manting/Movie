@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <script src="dist/js/bootstrap.bundle.js"></script>
+    <title>神影视频 - 电影信息管理</title>
+    <style>
+        /* 全局样式 - 复用前台主页的CSS变量 */
+        :root {
+            /* 主色调 - 蓝绿色渐变 */
+            --primary-color: #20c997;
+            --primary-dark: #17a2b8;
+            --primary-light: #48d1cc;
+            
+            /* 辅助色 */
+            --secondary-color: #6c757d;
+            --secondary-dark: #495057;
+            --secondary-light: #868e96;
+            
+            /* 功能色 */
+            --success-color: #28a745;
+            --success-dark: #218838;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            
+            /* 浅色主题背景色 */
+            --bg-color: #f8f9fa;
+            --bg-dark: #e9ecef;
+            --bg-card: #ffffff;
+            --bg-light: #f1f3f5;
+            
+            /* 文字色 */
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --text-light: #adb5bd;
+            --text-dark: #000000;
+            
+            /* 阴影 */
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --header-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            
+            /* 圆角 */
+            --border-radius-sm: 0.375rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 0.75rem;
+            
+            /* 过渡效果 */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s ease;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar {
+            background-color: var(--bg-card);
+            box-shadow: var(--card-shadow);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--bg-light);
+        }
+        
+        .sidebar-logo {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+        
+        .nav-item {
+            margin: 0 0.5rem;
+        }
+        
+        .nav-link {
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+        }
+        
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            color: white;
+        }
+        
+        /* 主内容区样式 */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+        
+        /* 顶部导航栏样式 */
+        .top-nav {
+            background-color: var(--bg-card);
+            box-shadow: var(--header-shadow);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-search {
+            max-width: 300px;
+            width: 100%;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* 内容区样式 */
+        .content {
+            padding: 2rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        
+        /* 内容卡片样式 */
+        .content-card {
+            background-color: var(--bg-card);
+            box-shadow: var(--card-shadow);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--bg-light);
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--card-shadow);
+        }
+        
+        /* 表格样式 */
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead {
+            background-color: var(--bg-light);
+        }
+        
+        .table th {
+            border-bottom: 2px solid var(--bg-light);
+            font-weight: 600;
+        }
+        
+        .table td {
+            border-bottom: 1px solid var(--bg-light);
+        }
+        
+        .table img {
+            width: 60px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: var(--border-radius-sm);
+        }
+        
+        /* 搜索筛选栏样式 */
+        .search-filter {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .filter-group label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .filter-group select {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--bg-light);
+            background-color: var(--bg-card);
+        }
+        
+        /* 分页样式 */
+        .pagination {
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .page-item.active .page-link {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            border-color: var(--primary-color);
+        }
+        
+        .page-link {
+            color: var(--primary-color);
+        }
+        
+        /* 模态框样式 */
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            color: white;
+        }
+        
+        .modal-header .btn-close {
+            filter: invert(1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: var(--transition);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .top-nav {
+                padding: 1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fa fa-film"></i>
+                <span>神影视频</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="登录页面.html" class="nav-link">
+                    <i class="fa fa-dashboard"></i>
+                    <span>仪表盘</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="movie-management.html" class="nav-link active">
+                    <i class="fa fa-video-camera"></i>
+                    <span>电影管理</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-users"></i>
+                    <span>用户管理</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-comment"></i>
+                    <span>评论管理</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-bar-chart"></i>
+                    <span>统计分析</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-question-circle"></i>
+                    <span>帮助中心</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    
+    <div class="main-content">
+        <nav class="top-nav">
+            <div class="nav-search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="搜索电影...">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="user-info">
+                <a href="#" class="nav-link" style="color: var(--text-primary);">
+                    <i class="fa fa-bell-o"></i>
+                </a>
+                <a href="#" class="nav-link" style="color: var(--text-primary);">
+                    <i class="fa fa-envelope-o"></i>
+                </a>
+                <div class="user-avatar">
+                    <i class="fa fa-user"></i>
+                </div>
+                <span style="font-weight: 500;">管理员</span>
+                <a href="index.html" class="nav-link" style="color: var(--text-primary);">
+                
+                    <i class="fa fa-sign-out"></i>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <h1 class="page-title">
+                <i class="fa fa-video-camera"></i>
+                电影信息管理
+            </h1>
+            
+            <div class="content-card">
+                <div class="card-header">
+                    <h2 class="card-title">电影列表</h2>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMovieModal">
+                        <i class="fa fa-plus"></i>
+                        添加电影
+                    </button>
+                </div>
+                
+                <div class="search-filter">
+                    <div class="filter-group">
+                        <label>类型筛选：</label>
+                        <select>
+                            <option value="">全部类型</option>
+                            <option value="科幻">科幻</option>
+                            <option value="动作">动作</option>
+                            <option value="喜剧">喜剧</option>
+                            <option value="爱情">爱情</option>
+                            <option value="剧情">剧情</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>状态筛选：</label>
+                        <select>
+                            <option value="">全部状态</option>
+                            <option value="已上线">已上线</option>
+                            <option value="审核中">审核中</option>
+                            <option value="已下架">已下架</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>排序：</label>
+                        <select>
+                            <option value="latest">最新添加</option>
+                            <option value="oldest">最早添加</option>
+                            <option value="highest">评分最高</option>
+                            <option value="lowest">评分最低</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>封面</th>
+                            <th>电影名称</th>
+                            <th>类型</th>
+                            <th>导演</th>
+                            <th>评分</th>
+                            <th>播放量</th>
+                            <th>状态</th>
+                            <th>添加时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="image/01.png" alt="复仇者联盟4：终局之战"></td>
+                            <td>复仇者联盟4：终局之战</td>
+                            <td>科幻/动作</td>
+                            <td>安东尼·罗素, 乔·罗素</td>
+                            <td><span class="badge bg-warning">9.2</span></td>
+                            <td>23.5万</td>
+                            <td><span class="badge bg-success">已上线</span></td>
+                            <td>2025-12-17</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="image/02.png" alt="绿巨人2"></td>
+                            <td>绿巨人2</td>
+                            <td>科幻/动作</td>
+                            <td>路易斯·莱特里尔</td>
+                            <td><span class="badge bg-warning">7.8</span></td>
+                            <td>12.3万</td>
+                            <td><span class="badge bg-success">已上线</span></td>
+                            <td>2025-12-16</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="image/03.png" alt="钢铁侠2"></td>
+                            <td>钢铁侠2</td>
+                            <td>科幻/动作</td>
+                            <td>乔恩·费儒</td>
+                            <td><span class="badge bg-warning">8.5</span></td>
+                            <td>15.7万</td>
+                            <td><span class="badge bg-success">已上线</span></td>
+                            <td>2025-12-15</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="image/04.png" alt="雷神"></td>
+                            <td>雷神</td>
+                            <td>科幻/动作</td>
+                            <td>肯尼思·布拉纳</td>
+                            <td><span class="badge bg-warning">8.2</span></td>
+                            <td>14.1万</td>
+                            <td><span class="badge bg-success">已上线</span></td>
+                            <td>2025-12-14</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="image/05.png" alt="复仇者联盟"></td>
+                            <td>复仇者联盟</td>
+                            <td>科幻/动作</td>
+                            <td>乔斯·韦登</td>
+                            <td><span class="badge bg-warning">8.8</span></td>
+                            <td>21.2万</td>
+                            <td><span class="badge bg-success">已上线</span></td>
+                            <td>2025-12-13</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="image/06.png" alt="钢铁侠3"></td>
+                            <td>钢铁侠3</td>
+                            <td>科幻/动作</td>
+                            <td>沙恩·布莱克</td>
+                            <td><span class="badge bg-warning">8.4</span></td>
+                            <td>16.8万</td>
+                            <td><span class="badge bg-success">已上线</span></td>
+                            <td>2025-12-12</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="image/07.png" alt="雷神2"></td>
+                            <td>雷神2</td>
+                            <td>科幻/动作</td>
+                            <td>艾伦·泰勒</td>
+                            <td><span class="badge bg-warning">8.1</span></td>
+                            <td>13.9万</td>
+                            <td><span class="badge bg-warning">审核中</span></td>
+                            <td>2025-12-11</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="image/08.png" alt="美国队长2"></td>
+                            <td>美国队长2</td>
+                            <td>科幻/动作</td>
+                            <td>安东尼·罗素, 乔·罗素</td>
+                            <td><span class="badge bg-warning">8.6</span></td>
+                            <td>17.2万</td>
+                            <td><span class="badge bg-danger">已下架</span></td>
+                            <td>2025-12-10</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-edit"></i></a>
+                                <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">上一页</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">下一页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 添加电影模态框 -->
+    <div class="modal fade" id="addMovieModal" tabindex="-1" aria-labelledby="addMovieModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMovieModalLabel">添加电影</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="movieTitle" class="form-label">电影名称</label>
+                                    <input type="text" class="form-control" id="movieTitle" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="movieDirector" class="form-label">导演</label>
+                                    <input type="text" class="form-control" id="movieDirector" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="movieType" class="form-label">类型</label>
+                                    <input type="text" class="form-control" id="movieType" placeholder="用/分隔，如：科幻/动作" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="movieRating" class="form-label">评分</label>
+                                    <input type="number" class="form-control" id="movieRating" min="0" max="10" step="0.1" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="movieStatus" class="form-label">状态</label>
+                                    <select class="form-select" id="movieStatus" required>
+                                        <option value="已上线">已上线</option>
+                                        <option value="审核中">审核中</option>
+                                        <option value="已下架">已下架</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="movieCover" class="form-label">封面图片</label>
+                                    <input type="file" class="form-control" id="movieCover">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="movieVideo" class="form-label">视频文件</label>
+                                    <input type="file" class="form-control" id="movieVideo">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="movieDescription" class="form-label">剧情简介</label>
+                                    <textarea class="form-control" id="movieDescription" rows="5" required></textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="moviePlayCount" class="form-label">初始播放量</label>
+                                    <input type="number" class="form-control" id="moviePlayCount" min="0" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">保存添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 编辑电影模态框 -->
+    <div class="modal fade" id="editMovieModal" tabindex="-1" aria-labelledby="editMovieModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMovieModalLabel">编辑电影</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editMovieTitle" class="form-label">电影名称</label>
+                                    <input type="text" class="form-control" id="editMovieTitle" value="复仇者联盟4：终局之战" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="editMovieDirector" class="form-label">导演</label>
+                                    <input type="text" class="form-control" id="editMovieDirector" value="安东尼·罗素, 乔·罗素" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="editMovieType" class="form-label">类型</label>
+                                    <input type="text" class="form-control" id="editMovieType" value="科幻/动作" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="editMovieRating" class="form-label">评分</label>
+                                    <input type="number" class="form-control" id="editMovieRating" min="0" max="10" step="0.1" value="9.2" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="editMovieStatus" class="form-label">状态</label>
+                                    <select class="form-select" id="editMovieStatus" required>
+                                        <option value="已上线" selected>已上线</option>
+                                        <option value="审核中">审核中</option>
+                                        <option value="已下架">已下架</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editMovieCover" class="form-label">封面图片</label>
+                                    <input type="file" class="form-control" id="editMovieCover">
+                                    <div class="mt-2">
+                                        <img src="image/01.png" width="120" height="160" object-fit="cover" alt="当前封面">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="editMovieVideo" class="form-label">视频文件</label>
+                                    <input type="file" class="form-control" id="editMovieVideo">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="editMovieDescription" class="form-label">剧情简介</label>
+                                    <textarea class="form-control" id="editMovieDescription" rows="5" required>灭霸用无限手套的力量消灭了宇宙一半的生命，复仇者联盟的幸存者们必须逆转灭霸的所作所为...</textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="editMoviePlayCount" class="form-label">播放量</label>
+                                    <input type="number" class="form-control" id="editMoviePlayCount" min="0" value="235000">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">保存修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

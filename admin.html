@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/css/bootstrap.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
+    <script src="dist/js/bootstrap.bundle.js"></script>
+    <title>神影视频 - 后台管理</title>
+    <style>
+        /* 全局样式 - 复用前台主页的CSS变量 */
+        :root {
+            /* 主色调 - 蓝绿色渐变 */
+            --primary-color: #20c997;
+            --primary-dark: #17a2b8;
+            --primary-light: #48d1cc;
+            
+            /* 辅助色 */
+            --secondary-color: #6c757d;
+            --secondary-dark: #495057;
+            --secondary-light: #868e96;
+            
+            /* 功能色 */
+            --success-color: #28a745;
+            --success-dark: #218838;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            
+            /* 浅色主题背景色 */
+            --bg-color: #f8f9fa;
+            --bg-dark: #e9ecef;
+            --bg-card: #ffffff;
+            --bg-light: #f1f3f5;
+            
+            /* 文字色 */
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --text-light: #adb5bd;
+            --text-dark: #000000;
+            
+            /* 阴影 */
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --header-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            
+            /* 圆角 */
+            --border-radius-sm: 0.375rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 0.75rem;
+            
+            /* 过渡效果 */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s ease;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar {
+            background-color: var(--bg-card);
+            box-shadow: var(--card-shadow);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--bg-light);
+        }
+        
+        .sidebar-logo {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+        
+        .nav-item {
+            margin: 0 0.5rem;
+        }
+        
+        .nav-link {
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+        }
+        
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            color: white;
+        }
+        
+        /* 主内容区样式 */
+        .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+        
+        /* 顶部导航栏样式 */
+        .top-nav {
+            background-color: var(--bg-card);
+            box-shadow: var(--header-shadow);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-search {
+            max-width: 300px;
+            width: 100%;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        /* 内容区样式 */
+        .content {
+            padding: 2rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        
+        /* 统计卡片样式 */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--bg-card);
+            box-shadow: var(--card-shadow);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            box-shadow: var(--card-hover-shadow);
+            transform: translateY(-2px);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .stat-change {
+            font-size: 0.8rem;
+            margin: 0.5rem 0 0 0;
+        }
+        
+        .stat-change.positive {
+            color: var(--success-color);
+        }
+        
+        .stat-change.negative {
+            color: var(--danger-color);
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--border-radius-md);
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        /* 内容卡片样式 */
+        .content-card {
+            background-color: var(--bg-card);
+            box-shadow: var(--card-shadow);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--bg-light);
+        }
+        
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--card-shadow);
+        }
+        
+        /* 表格样式 */
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead {
+            background-color: var(--bg-light);
+        }
+        
+        .table th {
+            border-bottom: 2px solid var(--bg-light);
+            font-weight: 600;
+        }
+        
+        .table td {
+            border-bottom: 1px solid var(--bg-light);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: var(--transition);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .top-nav {
+                padding: 1rem;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fa fa-film"></i>
+                <span>神影视频</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fa fa-dashboard"></i>
+                    <span>仪表盘</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="movie-management.html" class="nav-link">
+                    <i class="fa fa-video-camera"></i>
+                    <span>电影管理</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-users"></i>
+                    <span>用户管理</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-comment"></i>
+                    <span>评论管理</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-bar-chart"></i>
+                    <span>统计分析</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-cog"></i>
+                    <span>系统设置</span>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-question-circle"></i>
+                    <span>帮助中心</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    
+    <div class="main-content">
+        <nav class="top-nav">
+            <div class="nav-search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="搜索...">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="user-info">
+                <a href="#" class="nav-link" style="color: var(--text-primary);">
+                    <i class="fa fa-bell-o"></i>
+                </a>
+                <a href="#" class="nav-link" style="color: var(--text-primary);">
+                    <i class="fa fa-envelope-o"></i>
+                </a>
+                <div class="user-avatar">
+                    <i class="fa fa-user"></i>
+                </div>
+                <span style="font-weight: 500;">管理员</span>
+                <a href="index.html" class="nav-link" style="color: var(--text-primary);">
+                    <i class="fa fa-sign-out"></i>
+                </a>
+            </div>
+        </nav>
+        
+        <div class="content">
+            <h1 class="page-title">
+                <i class="fa fa-dashboard"></i>
+                仪表盘
+            </h1>
+            
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <p class="stat-title">总电影数</p>
+                            <h3 class="stat-value">128</h3>
+                            <p class="stat-change positive"><i class="fa fa-arrow-up"></i> +12 本月</p>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fa fa-video-camera"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <p class="stat-title">总用户数</p>
+                            <h3 class="stat-value">5,231</h3>
+                            <p class="stat-change positive"><i class="fa fa-arrow-up"></i> +456 本月</p>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fa fa-users"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <p class="stat-title">总播放量</p>
+                            <h3 class="stat-value">12.5万</h3>
+                            <p class="stat-change positive"><i class="fa fa-arrow-up"></i> +2.3万 本月</p>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fa fa-eye"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <p class="stat-title">总评论数</p>
+                            <h3 class="stat-value">3,842</h3>
+                            <p class="stat-change positive"><i class="fa fa-arrow-up"></i> +567 本月</p>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fa fa-comment"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa fa-video-camera"></i>
+                                最近添加的电影
+                            </h2>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fa fa-plus"></i>
+                                添加电影
+                            </a>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>电影名称</th>
+                                    <th>类型</th>
+                                    <th>添加时间</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>复仇者联盟4：终局之战</td>
+                                    <td>科幻/动作</td>
+                                    <td>2025-12-17</td>
+                                    <td><span class="badge bg-success">已上线</span></td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>钢铁侠3</td>
+                                    <td>科幻/动作</td>
+                                    <td>2025-12-16</td>
+                                    <td><span class="badge bg-success">已上线</span></td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>雷神2</td>
+                                    <td>科幻/动作</td>
+                                    <td>2025-12-15</td>
+                                    <td><span class="badge bg-warning">审核中</span></td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>美国队长2</td>
+                                    <td>科幻/动作</td>
+                                    <td>2025-12-14</td>
+                                    <td><span class="badge bg-success">已上线</span></td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa fa-users"></i>
+                                最近注册用户
+                            </h2>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>用户名</th>
+                                    <th>注册时间</th>
+                                    <th>状态</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>用户12345</td>
+                                    <td>2025-12-17</td>
+                                    <td><span class="badge bg-success">活跃</span></td>
+                                </tr>
+                                <tr>
+                                    <td>电影爱好者</td>
+                                    <td>2025-12-17</td>
+                                    <td><span class="badge bg-success">活跃</span></td>
+                                </tr>
+                                <tr>
+                                    <td>漫威迷</td>
+                                    <td>2025-12-16</td>
+                                    <td><span class="badge bg-warning">不活跃</span></td>
+                                </tr>
+                                <tr>
+                                    <td>DC粉</td>
+                                    <td>2025-12-16</td>
+                                    <td><span class="badge bg-success">活跃</span></td>
+                                </tr>
+                                <tr>
+                                    <td>科幻控</td>
+                                    <td>2025-12-15</td>
+                                    <td><span class="badge bg-danger">禁用</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
