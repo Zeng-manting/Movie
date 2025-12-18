@@ -313,6 +313,150 @@
             margin-top: 3rem;
         }
         
+        /* 悬浮阴影效果 */
+        .hover-shadow {
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hover-shadow:hover {
+            box-shadow: 0 5px 15px rgba(100, 181, 246, 0.3);
+        }
+
+        /* 排行榜样式 */
+        .ranking-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ranking-item {
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(245,250,255,0.8) 100%);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .ranking-item:hover {
+            transform: translateY(-2px);
+            border-left: 4px solid var(--primary-dark);
+        }
+
+        .ranking-item:last-child {
+            margin-bottom: 1;
+        }
+
+        /* 前三名特殊样式 */
+        .ranking-first {
+            border-left-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255,240,200,0.9) 0%, rgba(255,230,150,0.8) 100%);
+        }
+
+        .ranking-second {
+            border-left-color: #bc9a20;
+            background: linear-gradient(135deg, rgba(255,242,215,0.9) 0%, rgba(255,232,175,0.8) 100%);
+        }
+
+        .ranking-third {
+            border-left-color: #cd7f32;
+            background: linear-gradient(135deg, rgba(255,245,230,0.9) 0%, rgba(255,235,200,0.8) 100%);
+        }
+
+        .ranking-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .ranking-position {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 15px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .ranking-gold {
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .ranking-silver {
+            background: linear-gradient(135deg, #bc9a20, hsl(35, 54%, 50%));
+            box-shadow: 0 3px 10px rgba(192, 192, 192, 0.4);
+        }
+
+        .ranking-bronze {
+            background: linear-gradient(135deg, #cd7f32, #e6b886);
+            box-shadow: 0 3px 10px rgba(205, 127, 50, 0.4);
+        }
+
+        .ranking-title {
+            flex: 1;
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .ranking-score {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .stars {
+            display: flex;
+            font-size: 14px;
+        }
+
+        .score-text {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .ranking-description {
+            margin: 8px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .ranking-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            padding-top: 8px;
+            border-top: 1px solid #eee;
+        }
+
+        .views {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .category {
+            background: rgba(100, 181, 246, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--primary-color);
+        }
+
         /* 全局链接样式 */
         a {
             color: var(--text-primary);
@@ -763,6 +907,355 @@
                             </div>
                         </div>
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 分类导航 -->
+        <section class="featured-section">
+            <h2 class="section-title">内容分类</h2>
+            <div class="row">
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-bolt" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">动作</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-heart" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">爱情</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-scissors" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">悬疑</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-smile-o" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">喜剧</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-frown-o" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">悲剧</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-rocket" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">科幻</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-tree" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">奇幻</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-bomb" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">战争</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-graduation-cap" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">青春</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-users" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">历史</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-medkit" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">医疗</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4">
+                    <a href="#" class="card-link">
+                        <div class="quick-card text-center">
+                            <i class="fa fa-gavel" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <h5 class="text-center">犯罪</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 用户推荐 -->
+        <section class="featured-section">
+            <h2 class="section-title">为你推荐</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <a href="detail.html" class="card-link">
+                        <div class="card h-100">
+                            <img src="image/09.png" class="card-img-top" alt="复仇者联盟2">
+                            <div class="card-body">
+                                <h5 class="card-title">复仇者联盟2</h5>
+                                <p class="card-text">奥创纪元</p>
+                                <div class="card-meta">
+                                    <span><i class="fa fa-eye"></i> 19.8万</span>
+                                    <span><i class="fa fa-star text-warning"></i> 8.9</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <a href="detail.html" class="card-link">
+                        <div class="card h-100">
+                            <img src="image/10.jpg" class="card-img-top" alt="银河护卫队">
+                            <div class="card-body">
+                                <h5 class="card-title">银河护卫队</h5>
+                                <p class="card-text">太空冒险</p>
+                                <div class="card-meta">
+                                    <span><i class="fa fa-eye"></i> 17.5万</span>
+                                    <span><i class="fa fa-star text-warning"></i> 8.8</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <a href="detail.html" class="card-link">
+                        <div class="card h-100">
+                            <img src="image/11.jpg" class="card-img-top" alt="蚁人">
+                            <div class="card-body">
+                                <h5 class="card-title">蚁人</h5>
+                                <p class="card-text">缩小的超级英雄</p>
+                                <div class="card-meta">
+                                    <span><i class="fa fa-eye"></i> 15.2万</span>
+                                    <span><i class="fa fa-star text-warning"></i> 8.5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <a href="detail.html" class="card-link">
+                        <div class="card h-100">
+                            <img src="image/12.jpg" class="card-img-top" alt="奇异博士">
+                            <div class="card-body">
+                                <h5 class="card-title">奇异博士</h5>
+                                <p class="card-text">魔法世界的冒险</p>
+                                <div class="card-meta">
+                                    <span><i class="fa fa-eye"></i> 16.7万</span>
+                                    <span><i class="fa fa-star text-warning"></i> 8.7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 排行榜 -->
+        <section class="featured-section">
+            <h2 class="section-title">本周热门排行</h2>
+            <div class="row">
+                <div class="col-md-8 mb-4">
+                    <div class="ranking-container bg-white rounded-lg shadow p-4">
+                        <a href="detail.html" class="text-decoration-none">
+                            <div class="ranking-item ranking-first hover-shadow">
+                                <div class="ranking-header">
+                                    <div class="ranking-position ranking-gold">1</div>
+                                    <h5 class="ranking-title">复仇者联盟</h5>
+                                    <div class="ranking-score">
+                                        <div class="stars">
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                        </div>
+                                        <span class="score-text">9.0</span>
+                                    </div>
+                                </div>
+                                <p class="ranking-description">超级英雄集结，共同对抗邪恶势力</p>
+                                <div class="ranking-meta">
+                                    <span class="views"><i class="fa fa-eye text-primary"></i> 20.3万</span>
+                                    <span class="category">动作 / 科幻</span>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="detail.html" class="text-decoration-none">
+                            <div class="ranking-item ranking-second hover-shadow">
+                                <div class="ranking-header">
+                                    <div class="ranking-position ranking-silver">2</div>
+                                    <h5 class="ranking-title">钢铁侠3</h5>
+                                    <div class="ranking-score">
+                                        <div class="stars">
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star-half-o text-warning"></i>
+                                        </div>
+                                        <span class="score-text">8.7</span>
+                                    </div>
+                                </div>
+                                <p class="ranking-description">钢铁侠的终极挑战，面对强大的敌人</p>
+                                <div class="ranking-meta">
+                                    <span class="views"><i class="fa fa-eye text-primary"></i> 18.7万</span>
+                                    <span class="category">动作 / 科幻</span>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="detail.html" class="text-decoration-none">
+                            <div class="ranking-item ranking-third hover-shadow">
+                                <div class="ranking-header">
+                                    <div class="ranking-position ranking-bronze">3</div>
+                                    <h5 class="ranking-title">美国队长2</h5>
+                                    <div class="ranking-score">
+                                        <div class="stars">
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star text-warning"></i>
+                                            <i class="fa fa-star-half-o text-warning"></i>
+                                        </div>
+                                        <span class="score-text">8.6</span>
+                                    </div>
+                                </div>
+                                <p class="ranking-description">冬日战士的威胁，美国队长的新挑战</p>
+                                <div class="ranking-meta">
+                                    <span class="views"><i class="fa fa-eye text-primary"></i> 16.5万</span>
+                                    <span class="category">动作 / 冒险</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary-light">
+                            <h5 class="card-title mb-0">最新上线</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item hover-shadow">
+                                <a href="detail.html" class="text-decoration-none">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="image/01.png" class="img-fluid" alt="绿巨人2" style="height: 80px; object-fit: cover;">
+                                        </div>
+                                        <div class="col-8">
+                                            <h6 class="mb-0">绿巨人2</h6>
+                                            <small class="text-muted">动作 / 科幻</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="list-group-item hover-shadow">
+                                <a href="detail.html" class="text-decoration-none">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="image/02.png" class="img-fluid" alt="钢铁侠2" style="height: 80px; object-fit: cover;">
+                                        </div>
+                                        <div class="col-8">
+                                            <h6 class="mb-0">钢铁侠2</h6>
+                                            <small class="text-muted">动作 / 科幻</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="list-group-item hover-shadow">
+                                <a href="detail.html" class="text-decoration-none">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="image/03.png" class="img-fluid" alt="雷神" style="height: 80px; object-fit: cover;">
+                                        </div>
+                                        <div class="col-8">
+                                            <h6 class="mb-0">雷神</h6>
+                                            <small class="text-muted">动作 / 奇幻</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="list-group-item hover-shadow">
+                                <a href="detail.html" class="text-decoration-none">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="image/04.png" class="img-fluid" alt="美国队长" style="height: 80px; object-fit: cover;">
+                                        </div>
+                                        <div class="col-8">
+                                            <h6 class="mb-0">美国队长</h6>
+                                            <small class="text-muted">动作 / 冒险</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 资讯动态 -->
+        <section class="featured-section">
+            <h2 class="section-title">影视资讯</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="image/12.png" class="card-img-top" alt="影视资讯" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">漫威新片计划公布</h5>
+                            <p class="card-text">漫威影业公布了未来五年的新片计划，包括多部超级英雄电影和剧集。</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">阅读更多</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="image/13.jpg" class="card-img-top" alt="影视资讯" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">热门剧集续订</h5>
+                            <p class="card-text">多部热门电视剧宣布续订新季，包括《复仇者联盟》衍生剧集。</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">阅读更多</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">电影节获奖名单</h5>
+                            <p class="card-text">第78届威尼斯电影节获奖名单揭晓，多部华语影片获得重要奖项。</p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">阅读更多</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

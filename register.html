@@ -11,10 +11,10 @@
     <style>
         /* 全局样式 */
         :root {
-            /* 主色调 - 蓝绿色渐变 */
-            --primary-color: #20c997;
-            --primary-dark: #17a2b8;
-            --primary-light: #48d1cc;
+            /* 主色调 - 淡蓝色渐变 */
+            --primary-color: #64b5f6;
+            --primary-dark: #42a5f5;
+            --primary-light: #90caf9;
             
             /* 辅助色 */
             --secondary-color: #6c757d;
@@ -22,8 +22,8 @@
             --secondary-light: #868e96;
             
             /* 功能色 */
-            --success-color: #28a745;
-            --success-dark: #218838;
+            --success-color: #64b5f6;
+            --success-dark: #42a5f5;
             --danger-color: #dc3545;
             --warning-color: #ffc107;
             --info-color: #17a2b8;
@@ -79,20 +79,14 @@
         
         .logo {
             font-size: 2rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary-color);
         }
         
         .logo-text h1 {
             font-size: 1.8rem;
             font-weight: 700;
             margin: 0;
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary-color);
         }
         
         .logo-text p {
@@ -148,13 +142,13 @@
         }
         
         .form-control:focus {
-            box-shadow: 0 0 0 0.2rem rgba(32, 201, 151, 0.25) !important;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
             border-color: var(--primary-color) !important;
         }
         
         /* 按钮样式 */
         .btn-success {
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            background-color: var(--primary-color);
             border: none;
             color: white;
             transition: var(--transition);
@@ -164,7 +158,7 @@
         .btn-success:hover {
             opacity: 0.9;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(32, 201, 151, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
         }
         
         /* 登录链接样式 */
@@ -187,9 +181,9 @@
         /* 页脚样式 */
         .footer {
             background-color: var(--bg-card);
-            padding: 2rem 0;
+            padding: 1.5rem 0;
             border-top: 1px solid var(--bg-light);
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
         
         .footer-links {
@@ -208,6 +202,7 @@
         
         .footer-links a:hover {
             color: var(--primary-color);
+            text-decoration: underline;
         }
         
         .footer-text {
@@ -283,7 +278,7 @@
                         <input type="checkbox" class="form-check-input" id="agreeTerms" required>
                         <label class="form-check-label" for="agreeTerms">我已阅读并同意<a href="#" style="color: var(--primary-color); text-decoration: none;">《用户协议》</a>和<a href="#" style="color: var(--primary-color); text-decoration: none;">《隐私政策》</a></label>
                     </div>
-                    <button type="submit" class="btn btn-success w-100">注册</button>
+                    <button type="submit" class="btn btn-primary w-100">注册</button>
                     <div class="login-link">
                         <p>已有账号？<a href="login.html">立即登录</a></p>
                     </div>

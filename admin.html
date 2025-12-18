@@ -7,14 +7,15 @@
     <link rel="stylesheet" href="dist/css/bootstrap.css">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
     <script src="dist/js/bootstrap.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>神影视频 - 后台管理</title>
     <style>
         /* 全局样式 - 复用前台主页的CSS变量 */
         :root {
-            /* 主色调 - 蓝绿色渐变 */
-            --primary-color: #20c997;
-            --primary-dark: #17a2b8;
-            --primary-light: #48d1cc;
+            /* 主色调 - 淡蓝色渐变 */
+            --primary-color: #64b5f6;
+            --primary-dark: #42a5f5;
+            --primary-light: #90caf9;
             
             /* 辅助色 */
             --secondary-color: #6c757d;
@@ -22,8 +23,8 @@
             --secondary-light: #868e96;
             
             /* 功能色 */
-            --success-color: #28a745;
-            --success-dark: #218838;
+            --success-color: #64b5f6;
+            --success-dark: #42a5f5;
             --danger-color: #dc3545;
             --warning-color: #ffc107;
             --info-color: #17a2b8;
@@ -83,10 +84,7 @@
         
         .sidebar-logo {
             font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary-color);
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -118,7 +116,7 @@
         }
         
         .nav-link.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            background-color: var(--primary-color);
             color: white;
         }
         
@@ -153,7 +151,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            background-color: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -230,7 +228,7 @@
             width: 50px;
             height: 50px;
             border-radius: var(--border-radius-md);
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            background-color: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -245,6 +243,12 @@
             border-radius: var(--border-radius-md);
             padding: 1.5rem;
             margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+        
+        .content-card:hover {
+            box-shadow: var(--card-hover-shadow);
+            transform: translateY(-2px);
         }
         
         .card-header {
@@ -263,14 +267,15 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            background-color: var(--primary-color);
             border: none;
             transition: var(--transition);
         }
         
         .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--card-shadow);
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
         }
         
         /* 表格样式 */
@@ -289,6 +294,54 @@
         
         .table td {
             border-bottom: 1px solid var(--bg-light);
+        }
+        
+        /* 通知中心样式 */
+        .notifications {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            background-color: var(--bg-light);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        .notification-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow);
+        }
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .notification-content {
+            flex: 1;
+        }
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+        .notification-text {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+        .notification-time {
+            font-size: 12px;
+            color: var(--text-secondary);
         }
         
         /* 响应式设计 */
@@ -466,6 +519,40 @@
                     <div class="content-card">
                         <div class="card-header">
                             <h2 class="card-title">
+                                <i class="fa fa-bar-chart"></i>
+                                网站流量统计
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 300px;">
+                                <canvas id="trafficChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa fa-pie-chart"></i>
+                                电影分类统计
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="height: 300px;">
+                                <canvas id="categoryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
                                 <i class="fa fa-video-camera"></i>
                                 最近添加的电影
                             </h2>
@@ -576,8 +663,123 @@
                         </table>
                     </div>
                 </div>
+                
+                <div class="col-md-4">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa fa-bell"></i>
+                                通知中心
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="notifications">
+                                <div class="notification-item">
+                                    <div class="notification-icon">
+                                        <i class="fa fa-warning text-warning"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p class="notification-title">系统更新提醒</p>
+                                        <p class="notification-text">新版本 1.2.0 已发布，建议立即更新</p>
+                                        <p class="notification-time">5分钟前</p>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-icon">
+                                        <i class="fa fa-video-camera text-primary"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p class="notification-title">新电影审核</p>
+                                        <p class="notification-text">有3部新电影需要审核</p>
+                                        <p class="notification-time">1小时前</p>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-icon">
+                                        <i class="fa fa-user-plus text-success"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p class="notification-title">新用户注册</p>
+                                        <p class="notification-text">今日新增50名用户</p>
+                                        <p class="notification-time">2小时前</p>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-icon">
+                                        <i class="fa fa-comments text-info"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <p class="notification-title">新评论提醒</p>
+                                        <p class="notification-text">有28条新评论需要处理</p>
+                                        <p class="notification-time">4小时前</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        // 初始化网站流量统计图表
+        const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+        const trafficChart = new Chart(trafficCtx, {
+            type: 'bar',
+            data: {
+                labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                datasets: [{
+                    label: '访问量',
+                    data: [1200, 1900, 1500, 2500, 2200, 3500, 4000],
+                    backgroundColor: 'rgba(100, 181, 246, 0.6)',
+                    borderColor: 'rgba(66, 165, 245, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // 初始化电影分类统计图表
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'pie',
+            data: {
+                labels: ['动作', '科幻', '喜剧', '爱情', '恐怖', '剧情'],
+                datasets: [{
+                    label: '电影分类',
+                    data: [35, 20, 15, 15, 10, 5],
+                    backgroundColor: [
+                        'rgba(100, 181, 246, 0.6)',
+                        'rgba(144, 202, 249, 0.6)',
+                        'rgba(220, 231, 245, 0.6)',
+                        'rgba(201, 222, 253, 0.6)',
+                        'rgba(178, 209, 255, 0.6)',
+                        'rgba(150, 194, 255, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(100, 181, 246, 1)',
+                        'rgba(144, 202, 249, 1)',
+                        'rgba(220, 231, 245, 1)',
+                        'rgba(201, 222, 253, 1)',
+                        'rgba(178, 209, 255, 1)',
+                        'rgba(150, 194, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
 </body>
 </html>

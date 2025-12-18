@@ -9,12 +9,12 @@
     <script src="dist/js/bootstrap.bundle.js"></script>
     <title>电影详情 - 神影视频</title>
     <style>
-        /* 全局样式 - 与现有页面保持一致 */
+        /* 全局样式 - 与index.html保持一致 */
         :root {
-            /* 主色调 - 蓝绿色渐变 */
-            --primary-color: #20c997;
-            --primary-dark: #17a2b8;
-            --primary-light: #48d1cc;
+            /* 主色调 - 淡蓝色 */
+            --primary-color: #007bff;
+            --primary-dark: #0056b3;
+            --primary-light: rgba(0, 123, 255, 0.1);
             
             /* 辅助色 */
             --secondary-color: #6c757d;
@@ -41,8 +41,8 @@
             --text-dark: #000000;
             
             /* 阴影 */
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            --card-hover-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
             --header-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             
             /* 圆角 */
@@ -51,7 +51,7 @@
             --border-radius-lg: 0.75rem;
             
             /* 过渡效果 */
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.3s ease;
             --transition-fast: all 0.2s ease;
         }
         
@@ -79,20 +79,14 @@
         
         .logo {
             font-size: 2rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary-color);
         }
         
         .logo-text h1 {
             font-size: 1.8rem;
             font-weight: 700;
             margin: 0;
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary-color);
         }
         
         .logo-text p {
@@ -139,17 +133,17 @@
         }
         
         .nav-pills .nav-link.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            background-color: var(--primary-color);
             color: white;
         }
         
         /* 电影详情页特定样式 */
         .movie-detail-section {
             background-color: var(--bg-card);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius-md);
-            box-shadow: var(--card-shadow);
-            margin-bottom: 2rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 1rem;
         }
         
         .movie-poster {
@@ -217,7 +211,7 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            background-color: var(--primary-color);
             border: none;
             color: white;
             transition: var(--transition);
@@ -227,7 +221,7 @@
         .btn-primary:hover {
             opacity: 0.9;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(32, 201, 151, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
             color: white;
         }
         
@@ -240,10 +234,10 @@
         }
         
         .btn-outline-primary:hover {
-            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            background-color: var(--primary-color);
             border-color: transparent;
             color: white;
-            box-shadow: 0 4px 12px rgba(32, 201, 151, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
         }
         
         .section-subtitle {
@@ -267,10 +261,10 @@
         /* 剧情简介样式 */
         .movie-synopsis {
             background-color: var(--bg-card);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius-md);
-            box-shadow: var(--card-shadow);
-            margin-bottom: 2rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 1rem;
         }
         
         .synopsis-text {
@@ -282,10 +276,10 @@
         /* 演员阵容样式 */
         .cast-section {
             background-color: var(--bg-card);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius-md);
-            box-shadow: var(--card-shadow);
-            margin-bottom: 2rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 1rem;
         }
         
         .cast-grid {
@@ -326,10 +320,10 @@
         /* 相关推荐样式 */
         .recommendations-section {
             background-color: var(--bg-card);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: var(--border-radius-md);
-            box-shadow: var(--card-shadow);
-            margin-bottom: 2rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 1rem;
         }
         
         .recommendation-card {
@@ -381,12 +375,12 @@
             color: var(--warning-color);
         }
         
-        /* 页脚样式 - 与现有页面保持一致 */
+        /* 页脚样式 - 与index.html保持一致 */
         .footer {
-            background-color: var(--bg-card);
+            background-color: var(--bg-color);
             padding: 2rem 0;
             border-top: 1px solid var(--bg-light);
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
         
         .footer-links {
@@ -405,6 +399,7 @@
         
         .footer-links a:hover {
             color: var(--primary-color);
+            text-decoration: underline;
         }
         
         .footer-text {
@@ -422,8 +417,288 @@
         }
         
         .form-control:focus {
-            box-shadow: 0 0 0 0.2rem rgba(32, 201, 151, 0.25) !important;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
             border-color: var(--primary-color) !important;
+        }
+        
+        /* 用户互动区样式 */
+        .user-interaction-section {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 1rem;
+        }
+        
+        .interaction-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-share {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-btn.weibo {
+            background-color: #e6162d;
+        }
+        
+        .social-btn.wechat {
+            background-color: #07c160;
+        }
+        
+        .social-btn.qq {
+            background-color: #12b7f5;
+        }
+        
+        .social-btn.facebook {
+            background-color: #1877f2;
+        }
+        
+        .social-btn.twitter {
+            background-color: #1da1f2;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+        
+        /* 电影统计信息样式 */
+        .movie-stats-section {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 1rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--bg-light);
+            border-radius: var(--border-radius-md);
+            transition: var(--transition);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        /* 观众评分分布样式 */
+        .rating-distribution-section {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 1rem;
+        }
+        
+        .distribution-container {
+            margin-top: 1rem;
+        }
+        
+        .distribution-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        
+        .rating-number {
+            width: 30px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .rating-bar {
+            flex: 1;
+            height: 8px;
+            background-color: var(--bg-light);
+            border-radius: 4px;
+            margin: 0 1rem;
+            overflow: hidden;
+        }
+        
+        .rating-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .rating-percentage {
+            width: 50px;
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        /* 评分评论区样式 */
+        .ratings-comments-section {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 1rem;
+        }
+        
+        /* 写评论 */
+        .write-comment {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+        
+        .comment-input-area {
+            flex: 1;
+        }
+        
+        .comment-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        
+        .comment-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .comment-rating i {
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        
+        .comment-rating i.hover,
+        .comment-rating i.active {
+            color: var(--warning-color);
+        }
+        
+        /* 评论列表 */
+        .comments-list {
+            margin-bottom: 2rem;
+        }
+        
+        .comment-item {
+            background-color: var(--bg-light);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+        
+        .comment-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .comment-user {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .comment-time {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        .comment-content {
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .comment-actions .action-btn {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-right: 1rem;
+            transition: var(--transition);
+        }
+        
+        .comment-actions .action-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        /* 加载更多评论 */
+        .load-more-comments {
+            text-align: center;
+            margin-top: 2rem;
         }
         
         /* 响应式设计 */
@@ -456,6 +731,55 @@
             .cast-avatar {
                 width: 80px;
                 height: 80px;
+            }
+            
+            /* 用户互动区 - 移动端 */
+            .user-interaction-section {
+                padding: 1.5rem;
+            }
+            
+            .interaction-buttons {
+                justify-content: center;
+            }
+            
+            .social-share {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            /* 电影统计信息 - 移动端 */
+            .movie-stats-section {
+                padding: 1.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            /* 观众评分分布 - 移动端 */
+            .rating-distribution-section {
+                padding: 1.5rem;
+            }
+            
+            /* 评分评论区 - 移动端 */
+            .ratings-comments-section {
+                padding: 1.5rem;
+            }
+            
+            .write-comment {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .comment-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .comment-item {
+                padding: 1rem;
             }
         }
         
@@ -491,7 +815,7 @@
                 <!-- Logo部分 -->
                 <div class="col-md-4">
                     <div class="logo-section">
-                        <i class="fa fa-play-circle-o fa-3x" style="background: linear-gradient(135deg, var(--primary-color), var(--success-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+                        <i class="fa fa-play-circle-o fa-3x" style="color: var(--primary-color);"></i>
                         <div class="logo-text">
                             <h1>神影视频</h1>
                             <p>ShenYing Video</p>
@@ -506,7 +830,7 @@
                             <div class="search-box">
                                 <div class="input-group">
                                     <input type="search" class="form-control" placeholder="搜索电影、电视剧、演员...">
-                                    <button class="btn btn-success" type="button">
+                                    <button class="btn btn-primary" type="button">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
@@ -514,10 +838,10 @@
                         </div>
                         <div class="col-md-4">
                             <div class="nav-links justify-content-end">
-                                <a href="login.html" class="btn btn-outline-success">
+                                <a href="login.html" class="btn btn-outline-primary">
                                     <i class="fa fa-user"></i> 登录
                                 </a>
-                                <a href="register.html" class="btn btn-success">
+                                <a href="register.html" class="btn btn-primary">
                                     <i class="fa fa-user-plus"></i> 注册
                                 </a>
                             </div>
@@ -635,6 +959,236 @@
                 <p>灭霸响指过后，宇宙间半数生命灰飞烟灭。幸存的复仇者们在惊奇队长的帮助下找到灭霸所在的星球，却发现灭霸已经将宝石摧毁，无计可施的复仇者们不得不接受这个残酷的现实。</p>
                 <p>五年后，蚁人斯科特意外从量子领域中归来，他提出了一个大胆的想法：通过量子领域进行时间旅行，收集过去的无限宝石，从而逆转灭霸的行为。复仇者们决定孤注一掷，为了人类和宇宙的未来，再次集结，展开了一场前所未有的时空冒险。</p>
                 <p>在这场终极之战中，复仇者们将面对过去的自己、强大的敌人以及不可预测的命运，他们必须团结一致，才能拯救宇宙中消失的生命，完成这场终局之战。</p>
+            </div>
+        </section>
+        
+        <!-- 用户互动区 -->
+        <section class="user-interaction-section">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="interaction-buttons">
+                        <button class="btn btn-outline-primary">
+                            <i class="fa fa-thumbs-up"></i> 有用 (12,345)
+                        </button>
+                        <button class="btn btn-outline-primary">
+                            <i class="fa fa-thumbs-down"></i> 没用 (678)
+                        </button>
+                        <button class="btn btn-outline-primary">
+                            <i class="fa fa-bookmark"></i> 想看
+                        </button>
+                        <button class="btn btn-outline-primary">
+                            <i class="fa fa-heart"></i> 收藏
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="social-share">
+                        <span class="share-text">分享到：</span>
+                        <a href="#" class="social-btn weibo"><i class="fa fa-weibo"></i></a>
+                        <a href="#" class="social-btn wechat"><i class="fa fa-weixin"></i></a>
+                        <a href="#" class="social-btn qq"><i class="fa fa-qq"></i></a>
+                        <a href="#" class="social-btn facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="social-btn twitter"><i class="fa fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 电影统计信息 -->
+        <section class="movie-stats-section">
+            <h2 class="section-subtitle">电影统计</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa fa-trophy"></i></div>
+                    <div class="stat-label">获奖情况</div>
+                    <div class="stat-value">奥斯卡最佳视觉效果</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa fa-usd"></i></div>
+                    <div class="stat-label">全球票房</div>
+                    <div class="stat-value">$27.97亿</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa fa-eye"></i></div>
+                    <div class="stat-label">观看次数</div>
+                    <div class="stat-value">1.2亿次</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa fa-users"></i></div>
+                    <div class="stat-label">讨论热度</div>
+                    <div class="stat-value">34.5万条</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 观众评分分布 -->
+        <section class="rating-distribution-section">
+            <h2 class="section-subtitle">观众评分分布</h2>
+            <div class="distribution-container">
+                <div class="distribution-item">
+                    <div class="rating-number">10</div>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 85%;"></div>
+                    </div>
+                    <div class="rating-percentage">85%</div>
+                </div>
+                <div class="distribution-item">
+                    <div class="rating-number">9</div>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 10%;"></div>
+                    </div>
+                    <div class="rating-percentage">10%</div>
+                </div>
+                <div class="distribution-item">
+                    <div class="rating-number">8</div>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 3%;"></div>
+                    </div>
+                    <div class="rating-percentage">3%</div>
+                </div>
+                <div class="distribution-item">
+                    <div class="rating-number">7</div>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 1%;"></div>
+                    </div>
+                    <div class="rating-percentage">1%</div>
+                </div>
+                <div class="distribution-item">
+                    <div class="rating-number">6</div>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 0.5%;"></div>
+                    </div>
+                    <div class="rating-percentage">0.5%</div>
+                </div>
+                <div class="distribution-item">
+                    <div class="rating-number">5</div>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 0.3%;"></div>
+                    </div>
+                    <div class="rating-percentage">0.3%</div>
+                </div>
+                <div class="distribution-item">
+                    <div class="rating-number">4</div>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 0.2%;"></div>
+                    </div>
+                    <div class="rating-percentage">0.2%</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 评分评论区 -->
+        <section class="ratings-comments-section">
+            <h2 class="section-subtitle">用户评论</h2>
+            
+            <!-- 写评论 -->
+            <div class="write-comment">
+                <div class="user-avatar-small"><i class="fa fa-user"></i></div>
+                <div class="comment-input-area">
+                    <textarea class="form-control" rows="3" placeholder="写下你的评论..."></textarea>
+                    <div class="comment-actions">
+                        <div class="comment-rating">
+                            <span>评分：</span>
+                            <i class="fa fa-star-o" data-rating="1"></i>
+                            <i class="fa fa-star-o" data-rating="2"></i>
+                            <i class="fa fa-star-o" data-rating="3"></i>
+                            <i class="fa fa-star-o" data-rating="4"></i>
+                            <i class="fa fa-star-o" data-rating="5"></i>
+                        </div>
+                        <button class="btn btn-primary">发表评论</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 评论列表 -->
+            <div class="comments-list">
+                <!-- 评论1 -->
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-user">
+                            <div class="user-avatar-small"><i class="fa fa-user"></i></div>
+                            <div class="user-info">
+                                <div class="user-name">漫威迷</div>
+                                <div class="comment-time">2023-12-15 14:30</div>
+                            </div>
+                        </div>
+                        <div class="comment-rating">
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        这是我看过的最好的超级英雄电影之一！剧情紧凑，特效震撼，演员表演出色，尤其是钢铁侠的结局让我感动得流泪。漫威十年布局，终于迎来了完美的终局。强烈推荐给所有漫威粉丝和喜欢科幻动作片的观众！
+                    </div>
+                    <div class="comment-actions">
+                        <a href="#" class="action-btn"><i class="fa fa-thumbs-up"></i> 有用 (456)</a>
+                        <a href="#" class="action-btn"><i class="fa fa-reply"></i> 回复</a>
+                    </div>
+                </div>
+                
+                <!-- 评论2 -->
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-user">
+                            <div class="user-avatar-small"><i class="fa fa-user"></i></div>
+                            <div class="user-info">
+                                <div class="user-name">电影爱好者</div>
+                                <div class="comment-time">2023-12-14 10:15</div>
+                            </div>
+                        </div>
+                        <div class="comment-rating">
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star-half-o" style="color: var(--warning-color);"></i>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        作为漫威电影宇宙的阶段性完结，这部电影做得非常出色。它不仅给了众多角色一个圆满的结局，还为整个系列画上了一个完美的句号。虽然有些情节在意料之中，但整体观影体验还是非常棒的。
+                    </div>
+                    <div class="comment-actions">
+                        <a href="#" class="action-btn"><i class="fa fa-thumbs-up"></i> 有用 (234)</a>
+                        <a href="#" class="action-btn"><i class="fa fa-reply"></i> 回复</a>
+                    </div>
+                </div>
+                
+                <!-- 评论3 -->
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-user">
+                            <div class="user-avatar-small"><i class="fa fa-user"></i></div>
+                            <div class="user-info">
+                                <div class="user-name">科幻迷</div>
+                                <div class="comment-time">2023-12-13 18:45</div>
+                            </div>
+                        </div>
+                        <div class="comment-rating">
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star" style="color: var(--warning-color);"></i>
+                            <i class="fa fa-star-o" style="color: var(--warning-color);"></i>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        特效和音效都非常震撼，特别是最后大决战的场景，简直是视觉盛宴。不过剧情有些地方过于拖沓，时间旅行的设定也有些漏洞。但总体来说，还是一部值得一看的电影，尤其是对漫威宇宙的粉丝来说。
+                    </div>
+                    <div class="comment-actions">
+                        <a href="#" class="action-btn"><i class="fa fa-thumbs-up"></i> 有用 (123)</a>
+                        <a href="#" class="action-btn"><i class="fa fa-reply"></i> 回复</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 加载更多评论 -->
+            <div class="load-more-comments">
+                <button class="btn btn-outline-primary">
+                    <i class="fa fa-refresh"></i> 加载更多评论
+                </button>
             </div>
         </section>
         
